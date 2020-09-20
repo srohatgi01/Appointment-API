@@ -13,7 +13,8 @@ from django.urls import path
 #     # UserModelView
 #     path('api/v1/users/usermodelview/', UserModelView.as_view()),
 # ]
-from .views import UserViewSet, ZorgViewSet, CategoryViewSet
+# from .views import UserViewSet, ZorgViewSet, CategoryViewSet
+from .views import *
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
 router = DefaultRouter()

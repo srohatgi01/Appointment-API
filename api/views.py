@@ -1,19 +1,22 @@
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
+# from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 
 # All models
-from .models import User, Zorg, UserPhoto, UserCoin, Gender, Appointment_Status, Appointment, Advertisment, Zorg_Rating, AppointmentDetail, Service, Zorg_Branche, Categories
+# from .models import User, Zorg, UserPhoto, UserCoin, Gender, Appointment_Status, Appointment, Advertisment, Zorg_Rating, AppointmentDetail, Service, Zorg_Branche, Categories
+from .models import *
 
 # All Serializers
-from .serilizers import  UserSerializer, ZorgSerilizer, CategorySerilizer, ServiceSerilizer, AppointmentSerilizer, AppointmentDetailSerilizer, GenderSerilizer, UserPhotoSerilizer, ZorgBranchSerilizer, AppointmentStatusSerilizer, UserCoinSerilizer, AdvertismentSerilizer, ZorgRatingSerilizer
+# from .serilizers import  UserSerializer, ZorgSerilizer, CategorySerilizer, ServiceSerilizer, AppointmentSerilizer, AppointmentDetailSerilizer, GenderSerilizer, UserPhotoSerilizer, ZorgBranchSerilizer, AppointmentStatusSerilizer, UserCoinSerilizer, AdvertismentSerilizer, ZorgRatingSerilizer
+from .serializers import *
+
+# REST Framework Imports
 from rest_framework.views import APIView
 from rest_framework.response import Response 
-from rest_framework import status
-from rest_framework import viewsets
+from rest_framework import status, viewsets
 from django.shortcuts import get_object_or_404
 
 # class GetUsers(APIView):
@@ -32,8 +35,6 @@ class UserViewSet(viewsets.ViewSet):
     """
     This is a proper viewset to use during api calls as of 12th September
     """
-
-    
 
     def list(self, request):
         """
