@@ -28,7 +28,9 @@ class UserSerializer(serializers.ModelSerializer):
                     'zip_code',
                     'mobile_number',
                     'birthdate',
+                    'photo_url',
                     'gender',
+                    
                 ]
 
     def create(self, validated_data):
@@ -38,7 +40,6 @@ class UserSerializer(serializers.ModelSerializer):
         # User.objects.create(user = user, **gender_data)
         # return user
         gender = validated_data.pop('gender')
-        print(gender)
         gender_instance = Gender.objects.get(**gender)
         user = User.objects.create(gender=gender_instance, **validated_data)
         return user
@@ -59,24 +60,37 @@ class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model= User
 #         exclude = ['email_id', 'joined']
-class CategorySerilizer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     """
     """
+    # zorg = ZorgSerilizer()
     class Meta:
         model = Categories
-        fields = '__all__'
+        fields = ['category_name',]
 
-class ZorgSerilizer(serializers.ModelSerializer):
+class ZorgSerializer(serializers.ModelSerializer):
     """
-    Zorg Serializer
+    This is a serializer for zorgs only.
     """
-    categories = CategorySerilizer()
+    categories = CategorySerializer(many=True)
     class Meta:
         model = Zorg
-        fields = '__all__'
+        fields = [
+            'id',
+            'name',
+            'owner_first_name',
+            'owner_last_name',
+            'salon_email_id',
+            'owner_email_id',
+            'open_year_of_salon',
+            'website',
+            'base_rating',
+            'categories',
+        ]
 
 
         # depth = 1
+
 
 class ServiceSerilizer(serializers.ModelSerializer):
     class Meta:
@@ -93,10 +107,7 @@ class AppointmentDetailSerilizer(serializers.ModelSerializer):
         model = AppointmentDetail
         fields = '__all__'
 
-class UserPhotoSerilizer(serializers.ModelSerializer):
-    class Meta:
-        model = UserPhoto
-        fields = '__all__'
+
 
 class ZorgBranchSerilizer(serializers.ModelSerializer):
     class Meta:

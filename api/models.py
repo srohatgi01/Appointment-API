@@ -19,6 +19,7 @@ class User(models.Model):
     zip_code      = models.CharField(max_length=6, blank=True)
     mobile_number = models.CharField(max_length=10, blank=True)
     birthdate     = models.DateField(blank=True, null=True)
+    photo_url     = models.URLField(max_length=255, blank=True)
     gender        = models.ForeignKey(Gender, on_delete=models.CASCADE, null=True, blank=True, related_name='user_gender')
     joined        = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
@@ -45,6 +46,7 @@ class Zorg(models.Model):
     website            = models.URLField(max_length=100)
     base_rating        = models.IntegerField(default=2)
     joined             = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    
 
     def __str__(self):
         return self.name
@@ -61,7 +63,7 @@ class Zorg_Branche(models.Model):
         return str(self.zorg) + '  '+ self.address
     
 class Categories(models.Model):
-    zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE, null=True)
+    zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE, null=True, related_name='categories')
     category_name = models.CharField(max_length=100)
 
     def __str__(self):

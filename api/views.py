@@ -145,7 +145,7 @@ class ZorgViewSet(viewsets.ViewSet):
         This method returns all the zorgs saved in the database in JSON format
         """
         queryset = Zorg.objects.all()
-        serializer = ZorgSerilizer(queryset, many=True)
+        serializer = ZorgSerializer(queryset, many=True)
         return Response(serializer.data)
     
     def retrieve(self, request, pk):
