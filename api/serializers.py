@@ -60,13 +60,24 @@ class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model= User
 #         exclude = ['email_id', 'joined']
-class CategorySerializer(serializers.ModelSerializer):
+
+class ServiceSerializer(serializers.ModelSerializer):
     """
+    This is a serializer to serializer and deserailize service serailizer.
     """
     # zorg = ZorgSerilizer()
     class Meta:
+        model = Service
+        exclude = ['id', 'category', 'zorg']
+
+class CategorySerializer(serializers.ModelSerializer):
+    """
+    This serailizer is to serialize and deserailize category model
+    """
+    services = ServiceSerializer(many=True)
+    class Meta:
         model = Categories
-        fields = ['category_name',]
+        fields = ['category_name', 'services']
 
 class ZorgSerializer(serializers.ModelSerializer):
     """
@@ -92,10 +103,10 @@ class ZorgSerializer(serializers.ModelSerializer):
         # depth = 1
 
 
-class ServiceSerilizer(serializers.ModelSerializer):
-    class Meta:
-        model = Service
-        fields = '__all__'
+# class ServiceSerilizer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Service
+#         fields = '__all__'
 
 class AppointmentSerilizer(serializers.ModelSerializer):
     class Meta:

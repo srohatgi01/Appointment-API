@@ -154,7 +154,7 @@ class ZorgViewSet(viewsets.ViewSet):
         """
         queryset = Zorg.objects.all()
         zorg = get_object_or_404(queryset, pk=pk)  
-        serializer = ZorgSerilizer(zorg)
+        serializer = ZorgSerializer(zorg)
         return Response(serializer.data)
 
     def create(self, request):
@@ -184,5 +184,14 @@ class CategoryViewSet(viewsets.ViewSet):
 
     def list(self, request):
         queryset = Categories.objects.all()
-        serializer = CategorySerilizer(queryset, many=True)
+        serializer = CategorySerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class ServiceViewSet(viewsets.ViewSet):
+    """
+    """
+
+    def list(self, request):
+        queryset = Service.objects.all()
+        serializer = ServiceSerializer(queryset, many=True)
         return Response(serializer.data)
