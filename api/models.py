@@ -27,7 +27,7 @@ class User(models.Model):
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
-class UserPhoto(models.Model):
+# class UserPhoto(models.Model):
     """This model contains the URL for photo url of Users"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     link = models.URLField(max_length=255)
@@ -52,7 +52,7 @@ class Zorg(models.Model):
         return self.name
 
 class Zorg_Branche(models.Model):
-    zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE,null=True)
+    zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE,null=True, related_name="branches")
     address = models.CharField(max_length=255)
     city          = models.CharField(max_length=20, blank=True)
     state         = models.CharField(max_length=50, blank=True)
@@ -70,8 +70,8 @@ class Categories(models.Model):
         return self.category_name  + ' - ' + str(self.zorg) 
 
 class Service(models.Model):
-    category = models.ForeignKey(Categories, on_delete=models.CASCADE,null=True, related_name="services")
-    zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE,null=True, related_name="zorg")
+    category = models.ForeignKey(Categories, on_delete=models.CASCADE,null=True, related_name='services')
+    # zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE,null=True, related_name="+")
     service_name = models.CharField(max_length=100)
     time = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=False)

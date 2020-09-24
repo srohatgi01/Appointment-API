@@ -34,41 +34,18 @@ class UserSerializer(serializers.ModelSerializer):
                 ]
 
     def create(self, validated_data):
-        # gender_data = validated_data.pop('gender')
-        # gender = Gender.objects.get_or_create(**validated_data)
-        # user = User(..., gender=gender_data)
-        # User.objects.create(user = user, **gender_data)
-        # return user
         gender = validated_data.pop('gender')
         gender_instance = Gender.objects.get(**gender)
         user = User.objects.create(gender=gender_instance, **validated_data)
         return user
 
-
-# class GetUserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         exclude = ['id'] 
-#         depth = 1
-      
-# class CreateUserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = '__all__'
-
-# class PutUserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model= User
-#         exclude = ['email_id', 'joined']
-
 class ServiceSerializer(serializers.ModelSerializer):
     """
     This is a serializer to serializer and deserailize service serailizer.
     """
-    # zorg = ZorgSerilizer()
     class Meta:
         model = Service
-        exclude = ['id', 'category', 'zorg']
+        exclude = ['id', 'category']
 
 class CategorySerializer(serializers.ModelSerializer):
     """
@@ -78,6 +55,14 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Categories
         fields = ['category_name', 'services']
+
+    def create(self, validated_data):
+        services = validated_data.pop('services')
+        print(services)
+        categories = Categories.objects.create(**validated_data)
+        for service in services:
+            Service.objects.create(category=categories, **service)
+        return categories
 
 class ZorgSerializer(serializers.ModelSerializer):
     """
@@ -100,13 +85,16 @@ class ZorgSerializer(serializers.ModelSerializer):
         ]
 
 
-        # depth = 1
-
-
-# class ServiceSerilizer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Service
-#         fields = '__all__'
+    def create(self, validated_data):
+        categories = validated_data.pop('categories')
+        zorg = Zorg.objects.create(**validated_data)
+        for category in categories:
+            services = category.pop('services')
+            category = Categories.objects.create(zorg=zorg, **category)
+            
+            for service in services:
+                Service.objects.create(category=category, **service)
+        return zorg
 
 class AppointmentSerilizer(serializers.ModelSerializer):
     class Meta:

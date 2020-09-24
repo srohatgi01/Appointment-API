@@ -161,7 +161,7 @@ class ZorgViewSet(viewsets.ViewSet):
         """
         This method creates the new zorg entry
         """
-        serializer = ZorgSerilizer(data=request.data)
+        serializer = ZorgSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -187,6 +187,14 @@ class CategoryViewSet(viewsets.ViewSet):
         serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data)
 
+    def create(self, request):
+        serializer = CategorySerializer(data = request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class ServiceViewSet(viewsets.ViewSet):
     """
     """
@@ -195,3 +203,22 @@ class ServiceViewSet(viewsets.ViewSet):
         queryset = Service.objects.all()
         serializer = ServiceSerializer(queryset, many=True)
         return Response(serializer.data)
+
+    def retrieve(self, request, pk):
+        """
+        """
+        queryset = Service.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = ServiceSerializer(user)
+        return Response(serializer.data)
+
+    def create(self, request):
+        """
+        This method creates the new service entry
+        """
+        serializer = ServiceSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
