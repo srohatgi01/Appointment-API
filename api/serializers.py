@@ -39,6 +39,11 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create(gender=gender_instance, **validated_data)
         return user
 
+class ZorgBranchSerilizer(serializers.ModelSerializer):
+    class Meta:
+        model = Zorg_Branche
+        exclude = ['id', 'zorg']
+
 class ServiceSerializer(serializers.ModelSerializer):
     """
     This is a serializer to serializer and deserailize service serailizer.
@@ -56,18 +61,19 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Categories
         fields = ['category_name', 'services']
 
-    def create(self, validated_data):
-        services = validated_data.pop('services')
-        print(services)
-        categories = Categories.objects.create(**validated_data)
-        for service in services:
-            Service.objects.create(category=categories, **service)
-        return categories
+    # def create(self, validated_data):
+    #     services = validated_data.pop('services')
+    #     print(services)
+    #     categories = Categories.objects.create(**validated_data)
+    #     for service in services:
+    #         Service.objects.create(category=categories, **service)
+    #     return categories
 
 class ZorgSerializer(serializers.ModelSerializer):
     """
     This is a serializer for zorgs only.
     """
+    branches = ZorgBranchSerilizer(many=True)
     categories = CategorySerializer(many=True)
     class Meta:
         model = Zorg
@@ -81,11 +87,13 @@ class ZorgSerializer(serializers.ModelSerializer):
             'open_year_of_salon',
             'website',
             'base_rating',
+            'branches',
             'categories',
         ]
 
 
     def create(self, validated_data):
+        branches = validated_data.pop('branches')
         categories = validated_data.pop('categories')
         zorg = Zorg.objects.create(**validated_data)
         for category in categories:
@@ -94,30 +102,82 @@ class ZorgSerializer(serializers.ModelSerializer):
             
             for service in services:
                 Service.objects.create(category=category, **service)
+        for branch in branches:
+            Zorg_Branche.objects.create(zorg=zorg, **branch)
         return zorg
 
-class AppointmentSerilizer(serializers.ModelSerializer):
+class UserAppointmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Appointment
-        fields = '__all__'
+        model = User
+        fields = [
+                    'id',
+                    'first_name',
+                    'last_name',
+                    'email_id',
+                    'mobile_number',
+                    'birthdate',
+                    'photo_url',
+                    'gender',
+                  ]
 
-class AppointmentDetailSerilizer(serializers.ModelSerializer):
-    class Meta:
-        model = AppointmentDetail
-        fields = '__all__'
-
-
-
-class ZorgBranchSerilizer(serializers.ModelSerializer):
+class ZorgBranchAppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Zorg_Branche
-        fields = '__all__'
+        exclude = ['id', 'zorg']
+
+class CategoryAppointmentSerializer(serializers.ModelSerializer):
+    """
+    This serailizer is to serialize and deserailize category model
+    """
+    class Meta:
+        model = Categories
+        fields = ['category_name']
+
+class ServiceAppointmentSerializer(serializers.ModelSerializer):
+    """
+    This is a serializer to serializer and deserailize service serailizer.
+    """
+    class Meta:
+        model = Service
+        exclude = ['id', 'category']
+
+class ZorgAppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Zorg
+        fields = [
+                    'id',
+                     'name',
+                     'salon_email_id',
+                     'website'
+                 ]
+
+class AppointmentDetailSerializer(serializers.ModelSerializer):
+
+    category = CategoryAppointmentSerializer()
+    service = ServiceAppointmentSerializer()
+    class Meta:
+        model = AppointmentDetail
+        exclude = ['id', 'appointment', ]
 
 class AppointmentStatusSerilizer(serializers.ModelSerializer):
 
     class Meta:
         model = Appointment_Status
+        fields = ['status']
+
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    appointment = AppointmentDetailSerializer(many=True)
+    status = AppointmentStatusSerilizer()
+    user = UserAppointmentSerializer()
+    zorg = ZorgAppointmentSerializer()
+    branch = ZorgBranchAppointmentSerializer()
+    class Meta:
+        model = Appointment
         fields = '__all__'
+
+
+
 
 class UserCoinSerilizer(serializers.ModelSerializer):
     class Meta:

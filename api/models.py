@@ -29,11 +29,11 @@ class User(models.Model):
 
 # class UserPhoto(models.Model):
     """This model contains the URL for photo url of Users"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    link = models.URLField(max_length=255)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    # link = models.URLField(max_length=255)
 
-    def __str__(self):
-        return str(self.user)
+    # def __str__(self):
+    #     return str(self.user)
 
 class Zorg(models.Model):
     """This is the Zorg model"""
@@ -85,29 +85,32 @@ class Appointment_Status(models.Model):
     def __str__(self):
         return self.status
 
+
+# Whenever the user make an appointment, one record will be stored in the "appointment" model but it will add
+# as many records to the "AppointmentDetail" model as the number of services the user booked.
 class Appointment(models.Model):
     """This is the model where all the orders/Appointments will be saved"""
     user        = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     zorg        = models.ForeignKey(Zorg, on_delete=models.CASCADE, null=True)
+    branch      = models.ForeignKey(Zorg_Branche, on_delete=models.CASCADE,null=True, related_name='branch')
     timestamp   = models.DateTimeField(auto_now_add=True, blank=True)
     status      = models.ForeignKey(Appointment_Status, on_delete=models.CASCADE, null=True)
     totaltime   = models.PositiveIntegerField(default=0)
-    total_price = models.DecimalField(decimal_places=2, max_digits=10)
+    total_price = models.DecimalField(decimal_places=2, max_digits=10, default=0)
     
 
     def __str__(self):
         return  str(self.user) + ' -> '  + str(self.zorg)
 
 class AppointmentDetail(models.Model):
-    appointment  = models.ForeignKey(Appointment, on_delete=models.CASCADE,null=True)
-    branch       = models.ForeignKey(Zorg_Branche, on_delete=models.CASCADE,null=True)
-    category     = models.ForeignKey(Categories, on_delete=models.CASCADE,null=True)
-    service      = models.ForeignKey(Service, on_delete=models.CASCADE,null=True)
-    servicePrice = models.DecimalField(max_digits=10, decimal_places=2)
-    discount     = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    appointment  = models.ForeignKey(Appointment, on_delete=models.CASCADE,null=True, related_name='appointment')
+    category     = models.ForeignKey(Categories, on_delete=models.CASCADE,null=True, related_name='category')
+    service      = models.ForeignKey(Service, on_delete=models.CASCADE,null=True, related_name='service')
+    # servicePrice = models.DecimalField(max_digits=10, decimal_places=2)
+    # discount     = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)
 
     def __str__(self):
-        return str(self.appointment) + '  ' + str(self.branch) + '  ' + str(self.service)
+        return str(self.appointment) + '  ' + str(self.service)
     
 class UserCoin(models.Model):
     """This model contains the amount of coin each user has"""

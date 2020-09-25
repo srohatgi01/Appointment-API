@@ -178,38 +178,38 @@ class ZorgViewSet(viewsets.ViewSet):
         """
         pass
 
-class CategoryViewSet(viewsets.ViewSet):
+class AppointmentDetailViewSet(viewsets.ViewSet):
     """
     """
 
     def list(self, request):
         queryset = Categories.objects.all()
-        serializer = CategorySerializer(queryset, many=True)
+        serializer = AppointmentDetailSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request):
-        serializer = CategorySerializer(data = request.data)
+        serializer = AppointmentDetailSerializer(data = request.data)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ServiceViewSet(viewsets.ViewSet):
+class AppointmentViewSet(viewsets.ViewSet):
     """
     """
 
     def list(self, request):
-        queryset = Service.objects.all()
-        serializer = ServiceSerializer(queryset, many=True)
+        queryset = Appointment.objects.all()
+        serializer = AppointmentSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk):
         """
         """
-        queryset = Service.objects.all()
+        queryset = Appointment.objects.all()
         user = get_object_or_404(queryset, pk=pk)
-        serializer = ServiceSerializer(user)
+        serializer = AppointmentSerializer(user)
         return Response(serializer.data)
 
     def create(self, request):
