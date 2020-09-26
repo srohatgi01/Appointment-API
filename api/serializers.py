@@ -125,18 +125,11 @@ class ZorgBranchAppointmentSerializer(serializers.ModelSerializer):
         model = Zorg_Branche
         exclude = ['id', 'zorg']
 
-class CategoryAppointmentSerializer(serializers.ModelSerializer):
-    """
-    This serailizer is to serialize and deserailize category model
-    """
-    class Meta:
-        model = Categories
-        fields = ['category_name']
-
 class ServiceAppointmentSerializer(serializers.ModelSerializer):
     """
     This is a serializer to serializer and deserailize service serailizer.
     """
+    # category = CategoryAppointmentSerializer()
     class Meta:
         model = Service
         exclude = ['id', 'category']
@@ -153,18 +146,16 @@ class ZorgAppointmentSerializer(serializers.ModelSerializer):
 
 class AppointmentDetailSerializer(serializers.ModelSerializer):
 
-    category = CategoryAppointmentSerializer()
     service = ServiceAppointmentSerializer()
     class Meta:
         model = AppointmentDetail
-        exclude = ['id', 'appointment', ]
+        exclude = ['id', 'appointment']
 
 class AppointmentStatusSerilizer(serializers.ModelSerializer):
 
     class Meta:
         model = Appointment_Status
         fields = ['status']
-
 
 class AppointmentSerializer(serializers.ModelSerializer):
     appointment = AppointmentDetailSerializer(many=True)
@@ -174,9 +165,39 @@ class AppointmentSerializer(serializers.ModelSerializer):
     branch = ZorgBranchAppointmentSerializer()
     class Meta:
         model = Appointment
-        fields = '__all__'
+        fields = [
+                'id', 
+                'status',
+                'appointment',
+                'user',
+                'zorg',
+                'branch',
+                'timestamp',
+                'totaltime',
+                'total_price'
+            ]
 
+    def create(self, validated_data):
+        user = validated_data.pop('user')
+        zorg = validated_data.pop('zorg')
+        status = validated_data.pop('status')
+        branch = validated_data.pop('branch')
 
+        user_instance = User.objects.get(**user)
+        zorg_instance = Zorg.objects.get(**zorg)
+        status_instance = Appointment_Status.objects.get(**status)
+        branch_instance = Zorg_Branche.objects.get(**branch)
+
+        appointment_services = validated_data.pop('appointment')
+
+        appointment = Appointment.objects.create(user = user_instance, zorg = zorg_instance, status = status_instance, branch = branch_instance, **validated_data)
+
+        for services in appointment_services:
+            service = services.pop('service')
+            service_instance = Service.objects.get(**service)
+            AppointmentDetail.objects.create(appointment=appointment, service=service_instance)
+
+        return appointment
 
 
 class UserCoinSerilizer(serializers.ModelSerializer):

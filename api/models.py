@@ -104,7 +104,7 @@ class Appointment(models.Model):
 
 class AppointmentDetail(models.Model):
     appointment  = models.ForeignKey(Appointment, on_delete=models.CASCADE,null=True, related_name='appointment')
-    category     = models.ForeignKey(Categories, on_delete=models.CASCADE,null=True, related_name='category')
+    # category     = models.ForeignKey(Categories, on_delete=models.CASCADE,null=True, related_name='category')
     service      = models.ForeignKey(Service, on_delete=models.CASCADE,null=True, related_name='service')
     # servicePrice = models.DecimalField(max_digits=10, decimal_places=2)
     # discount     = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0)

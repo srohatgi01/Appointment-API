@@ -19,18 +19,6 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets
 from django.shortcuts import get_object_or_404
 
-# class GetUsers(APIView):
-#     def get(self, request):
-#         users = User.objects.all()
-#         serializer = GetUserSerializer(users, many = True)
-#         return Response(serializer.data)
-
-# class UserModelView(APIView):
-#     def get(self, request):
-#         users = User.objects.all()
-#         serializer = UserModelSerializer(users, many = True)
-#         return Response(serializer.data)
-
 class UserViewSet(viewsets.ViewSet):
     """
     This is a proper viewset to use during api calls as of 12th September
@@ -216,7 +204,7 @@ class AppointmentViewSet(viewsets.ViewSet):
         """
         This method creates the new service entry
         """
-        serializer = ServiceSerializer(data=request.data)
+        serializer = AppointmentSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
