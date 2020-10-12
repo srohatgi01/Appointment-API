@@ -6,5 +6,9 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='user-list')
 router.register(r'zorgs', ZorgViewSet, basename='zorg-list')
 router.register(r'appointments', AppointmentViewSet, basename='appointments')
+router.register(r'usersemail', UserEmailListView, basename='user-email-list')
 # router.register(r'services', ServiceViewSet, basename='service-list')
+# urlpatterns = router.urls
+
 urlpatterns = router.urls
+

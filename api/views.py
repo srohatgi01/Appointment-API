@@ -1,23 +1,24 @@
-# from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-# from rest_framework.permissions import IsAuthenticated
-
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 
-# All models
-# from .models import User, Zorg, UserPhoto, UserCoin, Gender, Appointment_Status, Appointment, Advertisment, Zorg_Rating, AppointmentDetail, Service, Zorg_Branche, Categories
 from .models import *
-
-# All Serializers
-# from .serilizers import  UserSerializer, ZorgSerilizer, CategorySerilizer, ServiceSerilizer, AppointmentSerilizer, AppointmentDetailSerilizer, GenderSerilizer, UserPhotoSerilizer, ZorgBranchSerilizer, AppointmentStatusSerilizer, UserCoinSerilizer, AdvertismentSerilizer, ZorgRatingSerilizer
 from .serializers import *
-
-# REST Framework Imports
 from rest_framework.views import APIView
 from rest_framework.response import Response 
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, generics
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+
+class UserEmailListView(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    filter_backends = (DjangoFilterBackend)
+    filter_fields = ('email_id')
+
+    @classmethod
+    def get_extra_actions(cls):
+        return []
 
 class UserViewSet(viewsets.ViewSet):
     """
