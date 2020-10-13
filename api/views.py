@@ -9,56 +9,61 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets, generics
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
+from django_filters import rest_framework as filters
 
-class UserEmailListView(viewsets.ModelViewSet):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
-    filter_backends = (DjangoFilterBackend)
-    filter_fields = ('email_id')
+class UserFilter(filters.FilterSet):
 
-    @classmethod
-    def get_extra_actions(cls):
-        return []
+    class Meta: 
+        model = User
+        fields = {
+            'email_id': ['iexact']
+        }
 
-class UserViewSet(viewsets.ViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     """
     This is a proper viewset to use during api calls as of 12th September
     """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = UserFilter
 
-    def list(self, request):
-        """
-        """
-        queryset = User.objects.all()
-        serializer = UserSerializer(queryset, many=True)
-        return Response(serializer.data)
+    # def list(self, request):
+    #     """
+    #     """
+    #     queryset = User.objects.all()
+    #     serializer = UserSerializer(queryset, many=True)
+    #     filter_backends = [DjangoFilterBackend]
+    #     filterset_class = UserFilter
+    #     return Response(serializer.data)
     
-    def retrieve(self, request, pk):
-        """
-        """
-        queryset = User.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+    # def retrieve(self, request, pk):
+    #     """
+    #     """
+    #     queryset = User.objects.all()
+    #     user = get_object_or_404(queryset, pk=pk)
+    #     serializer = UserSerializer(user)
+    #     return Response(serializer.data)
     
-    def create(self, request):
-        """
-        """
-        serializer = UserSerializer(data=request.data)
+    # def create(self, request):
+    #     """
+    #     """
+    #     serializer = UserSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def update(self, request, pk):
-        """
-        """
-        pass
+    # def update(self, request, pk):
+    #     """
+    #     """
+    #     pass
 
-    def destroy(self, request, pk):
-        """
-        """
-        pass
+    # def destroy(self, request, pk):
+    #     """
+    #     """
+    #     pass
         
 # class GetUserDetails(APIView):
 #     def get_object(self, id):
