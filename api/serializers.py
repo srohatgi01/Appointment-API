@@ -18,7 +18,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-                    'id',
+                    # 'id',
+                    'uuid',
                     'first_name',
                     'last_name',
                     'email_id',
@@ -197,9 +198,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
             service_instance = Service.objects.get(**service)
             AppointmentDetail.objects.create(appointment=appointment, service=service_instance)
 
-        return appointment
-
-
+        return appointme
 class UserCoinSerilizer(serializers.ModelSerializer):
     class Meta:
         model = UserCoin

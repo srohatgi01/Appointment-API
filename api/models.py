@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 
 class Gender(models.Model):
@@ -10,6 +11,7 @@ class Gender(models.Model):
 
 class User(models.Model):
     """This is the Users model where all users data will be saved"""
+    uuid = models.CharField(default=uuid.uuid4, max_length=50, primary_key=True)
     first_name    = models.CharField(max_length=20)
     last_name     = models.CharField(max_length=20)
     email_id      = models.EmailField(max_length=100, default="")
@@ -129,8 +131,8 @@ class Advertisment(models.Model):
         return str(self.zorg)
      
 class Zorg_Rating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
-    zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE,null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name='user_id')
+    zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE,null=True, related_name='zorg')
     # appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE,null=True)
     rating = models.IntegerField()
 
