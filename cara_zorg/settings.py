@@ -15,7 +15,7 @@ SECRET_KEY = 'f5$=ur1(v6kwe5*w5yzi!xxso@65%(nnx9s#&#u%#a$-6u5-)+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['eywa.pythonanywhere.com']
 
 
 # Application definition
