@@ -15,7 +15,7 @@ SECRET_KEY = 'f5$=ur1(v6kwe5*w5yzi!xxso@65%(nnx9s#&#u%#a$-6u5-)+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['eywa.pythonanywhere.com']
+ALLOWED_HOSTS = ['eywa.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
+    'v2',
     'django_filters'
 ]
 

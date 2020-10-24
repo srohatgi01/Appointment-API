@@ -1,14 +1,6 @@
 from django.db import models
 import uuid
 
-
-# class Gender(models.Model):
-#     """This model contains all the available genders that users can choose to select"""
-#     gender = models.CharField(max_length=10, blank=True)
-
-#     def __str__(self):
-#         return self.gender
-
 class User(models.Model):
     """This is the Users model where all users data will be saved"""
     uuid = models.CharField(default=uuid.uuid4, max_length=50, primary_key=True)
@@ -22,21 +14,12 @@ class User(models.Model):
     mobile_number = models.CharField(max_length=10, blank=True)
     birthdate     = models.DateField(blank=True, null=True)
     photo_url     = models.URLField(max_length=255, blank=True)
-    gender        = models.CharField(max_length=10, default=" ", null=True)
-    # gender        = models.ForeignKey(Gender, on_delete=models.CASCADE, null=True, blank=True, related_name='user_gender')
+    gender        = models.CharField(max_length=10, blank=True)
     joined        = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
-
-# class UserPhoto(models.Model):
-    """This model contains the URL for photo url of Users"""
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    # link = models.URLField(max_length=255)
-
-    # def __str__(self):
-    #     return str(self.user)
 
 class Zorg(models.Model):
     """This is the Zorg model"""
@@ -74,7 +57,6 @@ class Categories(models.Model):
 
 class Service(models.Model):
     category = models.ForeignKey(Categories, on_delete=models.CASCADE,null=True, related_name='services')
-    # zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE,null=True, related_name="+")
     service_name = models.CharField(max_length=100)
     time = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
@@ -131,11 +113,3 @@ class Advertisment(models.Model):
     def __str__(self):
         return str(self.zorg)
      
-class Zorg_Rating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name='user_id')
-    zorg = models.ForeignKey(Zorg, on_delete=models.CASCADE,null=True, related_name='zorg')
-    # appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE,null=True)
-    rating = models.IntegerField()
-
-    def __str__(self):
-        return self.zorg + ' ' + self.user

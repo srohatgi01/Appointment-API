@@ -1,14 +1,5 @@
 from rest_framework import serializers
-# from .models import User, Zorg, UserPhoto, UserCoin, Gender, Appointment_Status, Appointment, Advertisment, Zorg_Rating, AppointmentDetail, Service, Zorg_Branche, Categories
 from .models import *
-
-# class GenderSerilizer(serializers.ModelSerializer):
-#     '''This is a general gender serializer'''
-#     class Meta:
-#         model = Gender
-#         exclude = [
-#                     'id',
-#                 ]              
 
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -18,7 +9,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-                    # 'id',
                     'uuid',
                     'first_name',
                     'last_name',
@@ -31,7 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
                     'birthdate',
                     'photo_url',
                     'gender',
-                    
                 ]
 
     # def create(self, validated_data):
@@ -199,6 +188,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
             AppointmentDetail.objects.create(appointment=appointment, service=service_instance)
 
         return appointment
+
 class UserCoinSerilizer(serializers.ModelSerializer):
     class Meta:
         model = UserCoin
@@ -207,9 +197,4 @@ class UserCoinSerilizer(serializers.ModelSerializer):
 class AdvertismentSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Advertisment
-        fields = '__all__'
-
-class ZorgRatingSerilizer(serializers.ModelSerializer):
-    class Meta:
-        model = Zorg_Rating
         fields = '__all__'
