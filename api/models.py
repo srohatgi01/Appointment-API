@@ -4,7 +4,7 @@ import uuid
 
 class Gender(models.Model):
     """This model contains all the available genders that users can choose to select"""
-    gender = models.CharField(max_length=10)
+    gender = models.CharField(max_length=10, blank=True)
 
     def __str__(self):
         return self.gender

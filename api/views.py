@@ -20,33 +20,33 @@ import json
 #         email_id = self.kwargs['email_id']
 #         return User.objects.filter(email_id=email_id)
 
-class UserRenderer(renderers.JSONRenderer):
-    '''
-    User Renderer Class
-    '''
-    charset = 'utf-8'
+# class UserRenderer(renderers.JSONRenderer):
+#     '''
+#     User Renderer Class
+#     '''
+#     charset = 'utf-8'
 
-    def render(self, data, accepted_media_type=None, renderer_context=None):
-        response = json.dumps(data)
+#     def render(self, data, accepted_media_type=None, renderer_context=None):
+#         response = json.dumps(data)
 
-        return response
+#         return response
 
-class UserFilter(filters.FilterSet):
-    '''
-    User Filter Class
-    '''
-    class Meta: 
-        model = User
-        fields = {
-            'email_id': ['iexact']
-        }
+# class UserFilter(filters.FilterSet):
+#     '''
+#     User Filter Class
+#     '''
+#     class Meta: 
+#         model = User
+#         fields = {
+#             'email_id': ['iexact']
+#         }
 
-class UserModelViewSet(viewsets.ModelViewSet):
-    """
-    viewSet.ModelViewset
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# class UserModelViewSet(viewsets.ModelViewSet):
+#     """
+#     viewSet.ModelViewset
+#     """
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
     # lookup_field = 'first_name'
     # filter_backends = [DjangoFilterBackend]
     # filterset_class = UserFilter
