@@ -69,6 +69,7 @@ class ZorgSerializer(serializers.ModelSerializer):
         model = Zorg
         fields = [
             'id',
+            'unique_id',
             'name',
             'owner_first_name',
             'owner_last_name',

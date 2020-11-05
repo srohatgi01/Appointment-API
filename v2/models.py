@@ -24,6 +24,7 @@ class User(models.Model):
 class Zorg(models.Model):
     """This is the Zorg model"""
     name               = models.CharField(max_length=100)
+    unique_id          = models.EmailField(max_length=30, unique=True)
     owner_first_name   = models.CharField(max_length=20)
     owner_last_name    = models.CharField(max_length=20)
     salon_email_id     = models.EmailField(max_length=100)
