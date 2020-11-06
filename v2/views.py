@@ -5,12 +5,12 @@ from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from .models import *
 from .serializers import *
 from rest_framework.views import APIView
-from rest_framework.response import Response 
+from rest_framework.response import Response
 from rest_framework import status, viewsets, generics
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
-from rest_framework import renderers
+from rest_framework import renderers, pagination, mixins
 import json
 
 # Create your views here.
@@ -51,48 +51,60 @@ class UserViewSet(viewsets.ViewSet):
         pass
         
 
-class ZorgViewSet(viewsets.ViewSet):
-    """
-    This viewset is for Zorg Serializer
-    """
+class ZorgResultsSetPagination(pagination.PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 10
 
-    def list(self, request):
-        """
-        This method returns all the zorgs saved in the database in JSON format
-        """
-        queryset = Zorg.objects.all()
-        serializer = ZorgSerializer(queryset, many=True)
-        return Response(serializer.data)
+class ZorgView(generics.ListAPIView):
+    queryset = Zorg.objects.all()
+    serializer_class = ZorgSerializer
+    pagination_class = ZorgResultsSetPagination
+# class ZorgViewSet(viewsets.ViewSet):
+#     """
+#     This viewset is for Zorg Serializer
+#     """
+
+#     def list(self, request):
+#         """
+#         This method returns all the zorgs saved in the database in JSON format
+#         """
+#         queryset = Zorg.objects.all()
+#         # pagination.PageNumberPagination.page_size = 10
+#         serializer = ZorgSerializer(queryset, many=True)
+       
+#         # pagination_class = ZorgResultsSetPagination
+#         return Response(serializer.data)
     
-    def retrieve(self, request, pk):
-        """
-        This method returns the specific zorg you asked for using the pk
-        """
-        queryset = Zorg.objects.all()
-        zorg = get_object_or_404(queryset, pk=pk)  
-        serializer = ZorgSerializer(zorg)
-        return Response(serializer.data)
+#     def retrieve(self, request, pk):
+#         """
+#         This method returns the specific zorg you asked for using the pk
+#         """
+#         queryset = Zorg.objects.all()
+#         zorg = get_object_or_404(queryset, pk=pk)  
+#         serializer = ZorgSerializer(zorg)
+#         return Response(serializer.data)
 
-    def create(self, request):
-        """
-        This method creates the new zorg entry
-        """
-        serializer = ZorgSerializer(data=request.data)
+#     def create(self, request):
+#         """
+#         This method creates the new zorg entry
+#         """
+#         serializer = ZorgSerializer(data=request.data)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def update(self, request, pk):
-        """
-        """
-        pass
+#     def update(self, request, pk):
+#         """
+#         """
+#         pass
     
-    def destroy(self, request, pk):
-        """
-        """
-        pass
+#     def destroy(self, request, pk):
+#         """
+#         """
+#         pass
 
 class AppointmentDetailViewSet(viewsets.ViewSet):
     """
