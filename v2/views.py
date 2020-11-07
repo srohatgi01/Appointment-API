@@ -56,10 +56,12 @@ class ZorgResultsSetPagination(pagination.PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 10
 
-class ZorgView(generics.ListAPIView):
+class ZorgView(generics.ListAPIView, generics.CreateAPIView):
     queryset = Zorg.objects.all().order_by('?')
     serializer_class = ZorgSerializer
     pagination_class = ZorgResultsSetPagination
+
+    
 # class ZorgViewSet(viewsets.ViewSet):
 #     """
 #     This viewset is for Zorg Serializer
