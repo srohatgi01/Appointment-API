@@ -4,13 +4,14 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from .models import *
 from .serializers import *
+from .filters import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, generics
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
-from rest_framework import renderers, pagination, mixins
+from rest_framework import renderers, pagination, mixins, filters
 import json
 
 # Create your views here.
@@ -60,6 +61,9 @@ class ZorgView(generics.ListAPIView, generics.CreateAPIView):
     queryset = Zorg.objects.all().order_by('?')
     serializer_class = ZorgSerializer
     pagination_class = ZorgResultsSetPagination
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_fields = ['name']
+    search_fields = ['^name']
 
     
 # class ZorgViewSet(viewsets.ViewSet):
