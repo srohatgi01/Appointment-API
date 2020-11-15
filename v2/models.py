@@ -32,6 +32,7 @@ class Zorg(models.Model):
     open_year_of_salon = models.CharField(max_length=4)
     website            = models.URLField(max_length=100)
     base_rating        = models.IntegerField(default=2)
+    profile_photo      = models.FileField(upload_to='assets/zorg/profile_photo/', null=True, blank=True, max_length=200)
     joined             = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     
 

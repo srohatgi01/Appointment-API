@@ -77,6 +77,7 @@ class ZorgSerializer(serializers.ModelSerializer):
             'owner_email_id',
             'open_year_of_salon',
             'website',
+            'profile_photo',
             'base_rating',
             'branches',
             'categories',

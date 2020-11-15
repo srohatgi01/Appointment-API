@@ -2,6 +2,11 @@ from django.urls import path
 from .views import *
 from rest_framework.routers import DefaultRouter
 
+# This import is to include 'settings' in the url patterns.
+from django.conf import settings
+# This is an import for static files. images are also static files.
+from django.conf.urls.static import static
+
 router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='user-list')
 router.register(r'appointments', AppointmentViewSet, basename='appointments')
@@ -13,4 +18,4 @@ router.register(r'appointments', AppointmentViewSet, basename='appointments')
 # urlpatterns = router.urls
 
 # # Using this because it includes class based urls and viewset based urls.
-urlpatterns = [path('zorgs/', ZorgView.as_view(), name='zorg-list')] + router.urls
+urlpatterns = [path('zorgs/', ZorgView.as_view(), name='zorg-list')] + router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
