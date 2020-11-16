@@ -6,6 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
         A usable working user serializer
     """
     # gender = GenderSerilizer()
+
     class Meta:
         model = User
         fields = [
@@ -65,6 +66,7 @@ class ZorgSerializer(serializers.ModelSerializer):
     """
     branches = ZorgBranchSerilizer(many=True)
     categories = CategorySerializer(many=True)
+    profile_photo = serializers.FileField(max_length=None, use_url=True)
     class Meta:
         model = Zorg
         fields = [
@@ -200,3 +202,11 @@ class AdvertismentSerilizer(serializers.ModelSerializer):
     class Meta:
         model = Advertisment
         fields = '__all__'
+
+class SampleSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(max_length=None, use_url=True)
+    file = serializers.FileField(max_length=None, use_url=True)
+
+    class Meta:
+        model = SampleModel
+        fields = ['text', 'image', 'file']

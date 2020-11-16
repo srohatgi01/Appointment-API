@@ -32,7 +32,7 @@ class Zorg(models.Model):
     open_year_of_salon = models.CharField(max_length=4)
     website            = models.URLField(max_length=100)
     base_rating        = models.IntegerField(default=2)
-    profile_photo      = models.FileField(upload_to='assets/zorg/profile_photo/', null=True, blank=True, max_length=200)
+    profile_photo      = models.ImageField(upload_to='zorg/profile_photo/', null=True, blank=True, max_length=200)
     joined             = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     
 
@@ -114,4 +114,13 @@ class Advertisment(models.Model):
 
     def __str__(self):
         return str(self.zorg)
+
+
+def sample_upload_path(instance, filename):
+    return '/'.join(['sample', str(instance.title), filename])
      
+
+class SampleModel(models.Model):
+    text = models.CharField(max_length=100, null=True, blank=True)
+    image = models.ImageField(upload_to='sample_upload_path', null=True, blank=True)
+    file = models.FileField(upload_to='files/', null=True, blank=True, max_length=200)
