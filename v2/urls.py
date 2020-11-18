@@ -19,6 +19,6 @@ router.register(r'appointments', AppointmentViewSet, basename='appointments')
 # urlpatterns = router.urls
 
 # # Using this because it includes class based urls and viewset based urls.
-urlpatterns = [path('zorgs/', ZorgView.as_view(), name='zorg-list'), path('sample/', SampleView.as_view(), name='sample')] + router.urls
+urlpatterns = [path('zorgs/', ZorgView.as_view(), name='zorg-list')] + router.urls
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

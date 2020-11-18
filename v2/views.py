@@ -156,24 +156,3 @@ class AppointmentViewSet(viewsets.ViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class SampleView(generics.ListAPIView, generics.CreateAPIView):
-    # def list(self, request):
-    #     """
-    #     """
-    #     queryset = SampleModel.objects.all()
-    #     serializer = SampleSerializer(queryset, many=True)
-    #     return Response(serializer.data)
-
-    # def create(self, request):
-    #     """
-    #     """
-    #     serializer = SampleSerializer(data=request.data)
-
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    queryset = SampleModel.objects.all()
-    serializer_class = SampleSerializer
-    

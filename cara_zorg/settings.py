@@ -117,7 +117,7 @@ STATIC_URL = '/static/'
 # MEDIA_URL = '/static/'
 # MEDIA_URL = '/'
 # MEDIA_URL = BASE_DIR + MEDIA_URL 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'assets')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'assets/')
 MEDIA_URL = '/assets/'
 
 REST_FRAMEWORK = {

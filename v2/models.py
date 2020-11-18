@@ -116,11 +116,7 @@ class Advertisment(models.Model):
         return str(self.zorg)
 
 
-def sample_upload_path(instance, filename):
-    return '/'.join(['sample', str(instance.title), filename])
+# def sample_upload_path(instance, filename):
+#     return '/'.join(['sample', str(instance.title), filename])
      
 
-class SampleModel(models.Model):
-    text = models.CharField(max_length=100, null=True, blank=True)
-    image = models.ImageField(upload_to='sample_upload_path', null=True, blank=True)
-    file = models.FileField(upload_to='files/', null=True, blank=True, max_length=200)
