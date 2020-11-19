@@ -33,10 +33,11 @@ class Zorg(models.Model):
     website            = models.URLField(max_length=100, blank=True)
     base_rating        = models.IntegerField(default=2)
     profile_photo      = models.ImageField(upload_to='zorg/profile_photo/', null=True, blank=True, max_length=200)
-    photo_1            = models.ImageField(upload_to='zorg/zorgz_images/', null=True, blank=True, max_length=200)
-    photo_2            = models.ImageField(upload_to='zorg/zorgz_images/', null=True, blank=True, max_length=200)
-    photo_3            = models.ImageField(upload_to='zorg/zorgz_images/', null=True, blank=True, max_length=200)
-    photo_4            = models.ImageField(upload_to='zorg/zorgz_images/', null=True, blank=True, max_length=200)
+    cover_photo        = models.ImageField(upload_to='zorg/cover_photo/', null=True, blank=True, max_length=200)
+    photo_1            = models.ImageField(upload_to='zorg/zorg_images/', null=True, blank=True, max_length=200)
+    photo_2            = models.ImageField(upload_to='zorg/zorg_images/', null=True, blank=True, max_length=200)
+    photo_3            = models.ImageField(upload_to='zorg/zorg_images/', null=True, blank=True, max_length=200)
+    photo_4            = models.ImageField(upload_to='zorg/zorg_images/', null=True, blank=True, max_length=200)
     joined             = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     
 

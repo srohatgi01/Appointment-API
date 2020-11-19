@@ -79,6 +79,7 @@ class ZorgSerializer(serializers.ModelSerializer):
             'open_year_of_salon',
             'website',
             'profile_photo',
+            'cover_photo',
             'photo_1',
             'photo_2',
             'photo_3',
