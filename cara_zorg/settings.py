@@ -14,7 +14,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool, default=True)
+# DEBUG = config('DEBUG', cast=bool, default=True)
+DEBUG=False
 
 ALLOWED_HOSTS = ['eywa.pythonanywhere.com', '127.0.0.1']
 
@@ -113,6 +114,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+# MEDIA_URL = '/static/'
+# MEDIA_URL = '/'
+# MEDIA_URL = BASE_DIR + MEDIA_URL 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'assets/')
+MEDIA_URL = '/assets/'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [

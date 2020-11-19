@@ -6,6 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
         A usable working user serializer
     """
     # gender = GenderSerilizer()
+
     class Meta:
         model = User
         fields = [
@@ -77,6 +78,12 @@ class ZorgSerializer(serializers.ModelSerializer):
             'owner_email_id',
             'open_year_of_salon',
             'website',
+            'profile_photo',
+            'cover_photo',
+            'photo_1',
+            'photo_2',
+            'photo_3',
+            'photo_4',
             'base_rating',
             'branches',
             'categories',
