@@ -35,7 +35,7 @@ The prerequisite for running this repo is having Python 3.6 or higher, Django Fr
 
 Just clone the repo in your virtual environment (but Docker is preferred) and start server to verify you have no errors. 
 
-Then run the 'makemigrations' and 'migrate' command followed by 'createsuperuser' and you are good to go.
+Then run the **'makemigrations'** and **'migrate'** command followed by **'createsuperuser'** and you are good to go.
 
 # Copyright-and-license
 Code and documentation Copyright 2020 Sarthak Rohatgi. Under MIT License.
